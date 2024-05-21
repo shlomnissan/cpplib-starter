@@ -3,10 +3,10 @@
 
 #include <gtest/gtest.h>
 
-#include "cpplib/vec2.hpp"
+#include "utils/sqrt.hpp"
 
-TEST(vec2, magnitude) {
-    auto v = cpplib::vec2 {3.f, 4.f};
+TEST(sqrt, perfect_square) {
+    auto f = sqrt(25.f);
 
-    EXPECT_EQ(v.magnitude(), 5.f);
+    EXPECT_EQ(f, 5.f);
 }

@@ -2,6 +2,8 @@ set(TARGET_NAME cpplib)
 set(PUBLIC_HEADERS_DIR ${CMAKE_SOURCE_DIR}/include/cpplib)
 
 set(SOURCE_CODE
+    utils/sqrt.cpp
+    utils/sqrt.hpp
     vec2.cpp
 )
 
