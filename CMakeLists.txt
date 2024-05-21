@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-file(READ "version.txt" VERSION_FILE)
-
-project(cpplib VERSION ${VERSION_FILE})
+project(cpplib VERSION 0.0.1)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -16,4 +14,5 @@ add_subdirectory(src)
 
 if (BUILD_TESTS)
     include(CTest)
+    add_subdirectory(tests)
 endif()

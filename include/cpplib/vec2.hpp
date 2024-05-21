@@ -5,7 +5,7 @@
 
 #include "cpplib_export.h"
 
-namespace mat {
+namespace cpplib {
     CPPLIB_EXPORT class vec2 {
     public:
         float x {0};

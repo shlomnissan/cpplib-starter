@@ -5,7 +5,7 @@
 
 #include <cmath>
 
-using namespace mat;
+using namespace cpplib;
 
 vec2::vec2(float x, float y) : x(x), y(y) {}
 
