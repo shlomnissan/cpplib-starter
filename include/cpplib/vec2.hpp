@@ -6,7 +6,7 @@
 #include "cpplib_export.h"
 
 namespace cpplib {
-    CPPLIB_EXPORT class vec2 {
+    class CPPLIB_EXPORT vec2 {
     public:
         float x {0};
         float y {0};

@@ -1,12 +1,20 @@
+if (BUILD_SHARED_LIBS)
+    message(FATAL_ERROR "
+        ⚠️ Unit tests should be built in conjunction with a static library.\n
+        -- -DBUILD_SHARED_LIBS=0 or -DBUILD_TESTS=0
+    ")
+endif()
+
 set(BUILD_GMOCK OFF CACHE BOOL "")
 set(INSTALL_GTEST OFF CACHE BOOL "")
 
 find_package(GTest REQUIRED)
 
 if (NOT GTest_FOUND)
-    message(STATUS "⚠️ GTest was not found. Use conan to install missing depedencies.")
-    message(STATUS "  -- conan install . --output-folder=build --build=missing -sbuild_type=Debug")
-    return()
+    message(FATAL_ERROR "
+        ⚠️ GTest was not found. Use conan to install missing depedencies.
+        -- conan install . --output-folder=build --build=missing -sbuild_type=Debug
+    ")
 endif()
 
 file(GLOB TEST_SOURCES ${CMAKE_CURRENT_LIST_DIR}/*.cpp)

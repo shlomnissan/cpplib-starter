@@ -6,7 +6,7 @@
 #include "utils/sqrt.hpp"
 
 TEST(sqrt, perfect_square) {
-    auto f = sqrt(25.f);
+    auto f = cpplib::sqrt(25.f);
 
     EXPECT_EQ(f, 5.f);
 }

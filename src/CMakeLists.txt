@@ -22,8 +22,8 @@ target_include_directories(${TARGET_NAME} PUBLIC
 
 if (BUILD_SHARED_LIBS)
     set_target_properties(${TARGET_NAME} PROPERTIES
-        VERSION ${matlib_VERSION_MAJOR}.${matlib_VERSION_MINOR}.${matlib_VERSION_PATCH}
-        SOVERSION ${matlib_VERSION_MAJOR}
+        VERSION ${cpplib_VERSION_MAJOR}.${cpplib_VERSION_MINOR}.${cpplib_VERSION_PATCH}
+        SOVERSION ${cpplib_VERSION_MAJOR}
     )
 endif()
 
