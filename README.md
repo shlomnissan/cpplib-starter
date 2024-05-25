@@ -1,3 +1,3 @@
-# 🔨 Modern C++/CMake library starter project
+# 🔨 Starter repository for modern C++ libraries
 
-This is a starter repository for modern C++ libraries.
+TBC
