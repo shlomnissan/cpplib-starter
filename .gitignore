@@ -110,4 +110,6 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-*.xit
+# Documentation
+
+docs/api
