@@ -1,3 +1,11 @@
+# Doxygen.cmake
+#
+# This CMake module automates the generation of public API documentation using Doxygen.
+# It checks for the presence of Doxygen on the system and, if found, configures a custom
+# build target to generate documentation based on a specified Doxyfile.
+#
+# If Doxygen is not found, a warning message will be displayed to inform the user.
+
 find_package(Doxygen)
 
 if (DOXYGEN_FOUND)
