@@ -1,0 +1,29 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+
+# VSCode settings
+.vscode/
+
+# CMake build folders
+build/
+release/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# vcpkg specific
+vcpkg_installed/
+vcpkg_buildtrees/
+vcpkg_packages/
+
+# Other common
+*.log
+*.swp
+*.swo
