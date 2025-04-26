@@ -1,5 +1,8 @@
 {
     "dependencies": [
-        "gtest"
+        {
+            "name": "gtest",
+            "version>=": "1.15.2"
+        }
     ]
 }
