@@ -14,21 +14,21 @@ if(NOT_APPLE)
     set(CMAKE_INSTALL_RPATH "$ORIGIN")
 endif()
 
-add_library(cpplib ${SOURCE_CODE} ${PUBLIC_HEADERS})
+add_library(${PROJECT_NAME} ${SOURCE_CODE} ${PUBLIC_HEADERS})
 
-target_include_directories(cpplib PUBLIC
+target_include_directories(${PROJECT_NAME} PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src>
 )
 
-set_target_properties(cpplib PROPERTIES
+set_target_properties(${PROJECT_NAME} PROPERTIES
     VERSION ${cpplib_VERSION_MAJOR}.${cpplib_VERSION_MINOR}.${cpplib_VERSION_PATCH}
     SOVERSION ${cpplib_VERSION_MAJOR}
 )
 
 include(GenerateExportHeader)
-generate_export_header(cpplib)
+generate_export_header(${PROJECT_NAME})
 
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
@@ -63,7 +63,7 @@ install(DIRECTORY "${PUBLIC_HEADERS_DIR}/"
 )
 
 install(FILES
-    "${CMAKE_CURRENT_BINARY_DIR}/cpplib_export.h"
+    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}_export.h"
     DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
 )
 
