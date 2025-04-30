@@ -1,5 +1,9 @@
 # 🔨 Modern C++ Library Starter
 
+![ubuntu-test-badge](https://github.com/shlomnissan/cpplib-starter/actions/workflows/ubuntu-test.yml/badge.svg)
+![windows-test-badge](https://github.com/shlomnissan/cpplib-starter/actions/workflows/windows-test.yml/badge.svg)
+![macos-test-badge](https://github.com/shlomnissan/cpplib-starter/actions/workflows/macos-test.yml/badge.svg)
+
 This repository provides a modern, cross-platform starter template for building C++ libraries.
 It incorporates best practices in project structure, build systems, package management, testing, and documentation.
 
