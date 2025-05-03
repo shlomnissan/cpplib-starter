@@ -5,13 +5,13 @@
 
 #include "cpplib_export.h"
 
-namespace CPPLIB_EXPORT cpplib {
+namespace cpplib {
 
 /**
  * @struct Vector2
  * @brief Represents a 2D vector with X and Y coordinates as float values.
  */
-struct Vector2 {
+struct CPPLIB_EXPORT Vector2 {
     /// @brief X coordinate of the vector.
     float x;
 
