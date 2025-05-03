@@ -9,7 +9,7 @@ namespace cpplib {
 
 /**
  * @struct Vector2
- * @brief Represents a 2D vector with X and Y coordinates as float values.
+ * @brief Represents a 2D vector with X and Y coordinates.
  */
 struct CPPLIB_EXPORT Vector2 {
     /// @brief X coordinate of the vector.

@@ -8,7 +8,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get -yq update
-          sudo apt-get install -yq cmake ninja-build libxinerama-dev libxcursor-dev xorg-dev libglu1-mesa-dev pkg-config
+          sudo apt-get install -yq cmake ninja-build libxinerama-dev libxcursor-dev xorg-dev libglu1-mesa-dev pkg-config doxygen graphviz
           gcc --version
           git clone https://github.com/microsoft/vcpkg.git ${{github.workspace}}/vcpkg
           ${{github.workspace}}/vcpkg/bootstrap-vcpkg.sh
@@ -24,3 +24,12 @@ jobs:
         run: |
           cd ${{github.workspace}}/build
           ctest -V
+      - name: Generate Documentation
+        shell: bash
+        run: ${{github.workspace}}/scripts/gendocs.sh
+      - name: Deploy to GitHub Pages
+        if: github.ref == 'refs/heads/main'  # Deploy only on main branch
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          publish_dir: ${{github.workspace}}/build/docs/html
