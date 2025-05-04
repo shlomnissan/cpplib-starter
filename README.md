@@ -3,6 +3,7 @@
 ![ubuntu-test-badge](https://github.com/shlomnissan/cpplib-starter/actions/workflows/ubuntu.yml/badge.svg)
 ![windows-test-badge](https://github.com/shlomnissan/cpplib-starter/actions/workflows/windows.yml/badge.svg)
 ![macos-test-badge](https://github.com/shlomnissan/cpplib-starter/actions/workflows/macos.yml/badge.svg)
+[![docs-badge](https://img.shields.io/badge/docs-online-blue.svg)](https://shlomnissan.github.io/cpplib-starter/)
 
 This repository provides a modern, cross-platform starter template for building C++ libraries.
 It incorporates best practices in project structure, build systems, package management, testing, and documentation.
