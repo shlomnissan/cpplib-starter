@@ -3,7 +3,7 @@
 set ERRLEV=0
 set BUILD_DIR=%1
 if "%BUILD_DIR%"=="" set BUILD_DIR=build
-set DOCS_DIR=%BUILD_DIR%\html
+set DOCS_DIR=%BUILD_DIR%\docs\html
 
 echo Generating Doxygen documentation
 
