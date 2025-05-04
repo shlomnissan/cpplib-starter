@@ -1,6 +1,6 @@
 # 🔨 Modern C++ Library Starter
 
-This repository provides a modern, cross-platform starter template for building C++ libraries.
+This repository provides a cross-platform starter template for building C++ libraries.
 It incorporates best practices in project structure, build systems, package management, testing, and documentation.
 
 If you're starting a new C++ library project, this template is designed to help you move quickly and confidently.
