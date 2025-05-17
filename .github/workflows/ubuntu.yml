@@ -18,7 +18,7 @@ jobs:
           echo "VCPKG_ROOT=${{github.workspace}}/vcpkg" >> $GITHUB_ENV
       - name: Configure
         shell: bash
-        run: cmake -B ${{github.workspace}}/build --preset="release" -G "Ninja"
+        run: cmake -B ${{github.workspace}}/build --preset="debug" -G "Ninja"
       - name: Build
         shell: bash
         run: cmake --build ${{github.workspace}}/build
@@ -40,3 +40,10 @@ jobs:
       - name: Install
         shell: bash
         run: sudo cmake --install ${{github.workspace}}/build
+      - name: Build and Run Example
+        shell: bash
+        run: |
+          cmake -B ${{github.workspace}}/example/build
+          cmake --build ${{github.workspace}}/example/build
+          cd ${{github.workspace}}/example/build
+          ./cpplib_example
