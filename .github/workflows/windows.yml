@@ -31,3 +31,9 @@ jobs:
       - name: Install
         shell: pwsh
         run: cmake --install "${{github.workspace}}/release" --config Release
+      - name: Build Example
+        shell: pwsh
+        run: |
+          mkdir example/build
+          cmake -B example/build -S example
+          cmake --build example/build

@@ -29,3 +29,8 @@ jobs:
       - name: Install
         shell: bash
         run: sudo cmake --install ${{github.workspace}}/release
+      - name: Build Example
+        shell: bash
+        run: |
+          cmake -B ${{github.workspace}}/example/build -S ${{github.workspace}}/example
+          cmake --build ${{github.workspace}}/example/build
