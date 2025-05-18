@@ -16,12 +16,11 @@ jobs:
           git clone https://github.com/microsoft/vcpkg.git ${{github.workspace}}/vcpkg
           ${{github.workspace}}/vcpkg/bootstrap-vcpkg.sh
           echo "VCPKG_ROOT=${{github.workspace}}/vcpkg" >> $GITHUB_ENV
-      - name: Configure
+      - name: Build (debug)
         shell: bash
-        run: cmake -B ${{github.workspace}}/build --preset="debug" -G "Ninja"
-      - name: Build
-        shell: bash
-        run: cmake --build ${{github.workspace}}/build
+        run: |
+          cmake -B ${{github.workspace}}/build --preset="debug" -G "Ninja"
+          cmake --build ${{github.workspace}}/build
       - name: Test
         shell: bash
         run: |
@@ -37,13 +36,17 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Build (release)
+        shell: bash
+        run: |
+          cmake -B ${{github.workspace}}/release --preset="release" -G "Ninja"
+          cmake --build ${{github.workspace}}/release
       - name: Install
         shell: bash
-        run: sudo cmake --install ${{github.workspace}}/build
+        run: sudo cmake --install ${{github.workspace}}/release
       - name: Build and Run Example
         shell: bash
         run: |
-          cmake -B ${{github.workspace}}/example/build
+          cmake -B ${{github.workspace}}/example/build -S ${{github.workspace}}/example
           cmake --build ${{github.workspace}}/example/build
-          cd ${{github.workspace}}/example/build
-          ./cpplib_example
+          ./${{github.workspace}}/example/build/cpplib_example

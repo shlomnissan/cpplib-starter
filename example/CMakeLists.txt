@@ -6,7 +6,7 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-find_package(cpplib REQUIRED)
+find_package(cpplib REQUIRED CONFIG)
 
 add_executable(cpplib_example main.cpp)
 

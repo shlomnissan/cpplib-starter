@@ -11,17 +11,21 @@ jobs:
           git clone https://github.com/microsoft/vcpkg.git ${{github.workspace}}/vcpkg
           ${{github.workspace}}/vcpkg/bootstrap-vcpkg.sh
           echo "VCPKG_ROOT=${{github.workspace}}/vcpkg" >> $GITHUB_ENV
-      - name: Configure
+      - name: Build (debug)
         shell: bash
-        run: cmake -B ${{github.workspace}}/build --preset="release" -G "Ninja"
-      - name: Build
-        shell: bash
-        run: cmake --build ${{github.workspace}}/build
+        run: |
+          cmake -B ${{github.workspace}}/build --preset="debug" -G "Ninja"
+          cmake --build ${{github.workspace}}/build
       - name: Test
         shell: bash
         run: |
           cd ${{github.workspace}}/build
           ctest -V
+      - name: Build (release)
+        shell: bash
+        run: |
+          cmake -B ${{github.workspace}}/release --preset="release" -G "Ninja"
+          cmake --build ${{github.workspace}}/release
       - name: Install
         shell: bash
-        run: sudo cmake --install ${{github.workspace}}/build
+        run: sudo cmake --install ${{github.workspace}}/release
