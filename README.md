@@ -26,14 +26,16 @@ If you're starting a new C++ library project, this template is designed to help 
 - **Documentation generation** ready with [Doxygen](https://www.doxygen.nl/).
 
 ## CMake Configuration
-While this starter project supports multiple distribution formats, shared libraries are preferred for their controlled symbol visibility, reduced binary size, dynamic versioning support, and lower runtime memory usage. The following subsections assume distribution via a shared library.
+While this starter project supports multiple distribution formats, shared libraries are preferred for their controlled symbol visibility, dynamic versioning support, reduced binary size, and lower runtime memory usage. The following subsections assume distribution via a shared library.
 
 ### Dependency Management and Presets
-This project utilizes [vcpkg](https://vcpkg.io/en/) for dependency management and CMake presets to streamline configuration across different platforms and build types.
-#### Managing Dependencies with vcpkg.json
-In [manifest mode](https://learn.microsoft.com/en-us/vcpkg/consume/manifest-mode), dependencies are declared in a `vcpkg.json` file located at the root of your project. This approach ensures that all team members and CI environments use the same set of dependencies, promoting consistency and reproducibility.
+This project uses [vcpkg](https://vcpkg.io/en/) for dependency management (see the _Getting Started_ section for installation instructions) and relies on CMake presets to simplify configuration across platforms and build types.
 
-To add a new dependency, such as `gtest`, you can manually edit the `vcpkg.json` file:
+#### Managing Dependencies with vcpkg.json
+In [manifest mode](https://learn.microsoft.com/en-us/vcpkg/consume/manifest-mode), dependencies are declared in a vcpkg.json file located at the root of your project. This approach ensures that all team members and CI environments use the same set of dependencies, promoting consistency and reproducibility.
+
+To add a new dependency, simply edit the `vcpkg.json` file directly. At the moment, it includes only gtest as a dependency.
+
 ```json
 {
   "dependencies": [
@@ -44,37 +46,8 @@ To add a new dependency, such as `gtest`, you can manually edit the `vcpkg.json`
   ]
 }
 ```
-> vcpkg resolves and installs any required transitive dependencies automatically.
-
 #### Configuring Builds with CMake Presets
-CMake presets simplify the configuration and build process by encapsulating common settings. In this project, the `CMakePresets.json` file defines two primary presets:
-```json
-{
-  "version": 3,
-  "configurePresets": [
-    {
-      "name": "debug",
-      "binaryDir": "${sourceDir}/build",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug",
-        "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
-      }
-    },
-    {
-      "name": "release",
-      "binaryDir": "${sourceDir}/release",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release",
-        "BUILD_SHARED_LIBS": "ON",
-        "BUILD_TESTS": "OFF",
-        "CMAKE_MSVC_RUNTIME_LIBRARY": "MultiThreadedDLL",
-        "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
-      }
-    }
-  ]
-}
-```
-To configure and build the project using these presets, run:
+CMake presets streamline the configuration and build process by capturing common settings. This project’s `CMakePresets.json` defines two main presets: `debug` and `release`. To configure and build the project with one of these presets, run:
 ```bash
 cmake --preset=debug
 cmake --build --preset=debug
@@ -84,21 +57,19 @@ or
 cmake --preset=release
 cmake --build --preset=release
 ```
-> Ensure the VCPKG_ROOT environment variable is set so that the presets can locate the vcpkg toolchain file correctly.
-
 Presets help enforce consistency across CI, local development, and packaging. You can easily extend them with additional presets for custom builds, testing, or platform-specific options.
 
 ### Symbol Visibility
 
 Symbol visibility determines which functions, classes, or variables in a compiled library are accessible to other programs. On Windows, symbols are hidden by default and must be explicitly marked for export when building a DLL. On Unix-like systems, symbols are visible by default unless compiler flags (like `-fvisibility=hidden`) are used to hide them.
 
-Controlling symbol visibility is important for building clean and efficient shared libraries. It helps prevent naming conflicts, reduces binary size, improves load times, and hides internal implementation details. This results in a safer, more maintainable library with better runtime performance.
+Controlling symbol visibility is important for building clean and efficient shared libraries. It helps prevent naming conflicts, improves load times, and hides internal implementation details. This results in a safer, more maintainable library with better runtime performance.
 
 To ensure consistent symbol visibility across platforms, this project uses CMake’s `GenerateExportHeader` module. It generates a header file (e.g., `cpplib_export.h`) that defines an export macro (e.g., `CPPLIB_EXPORT`) used to mark public symbols. By default, all symbols are hidden unless explicitly annotated with this macro.
 
-The header file and macro name are automatically derived from the project name defined in the root `CMakeLists.txt`. For example, `project(cpplib)` produces `cpplib_export.h` with the macro `CPPLIB_EXPORT`. Renaming the project will regenerate these accordingly, unless you override them manually.
+> The header file and macro name are automatically derived from the project name defined in the root `CMakeLists.txt`. For example, `project(cpplib)` produces `cpplib_export.h` with the macro `CPPLIB_EXPORT`. Renaming the project will regenerate these accordingly, unless you override them manually.
 
-To expose a symbol as part of the library’s public API, mark it with the generated export macro. Here's how to annotate different kinds of symbols:
+To expose a symbol as part of the library’s public API, mark it with the generated export macro. For example:
 
 ```cpp
 // public_api.h
@@ -116,6 +87,4 @@ CPPLIB_EXPORT void doSomething();
 // Exported global variable
 CPPLIB_EXPORT extern int myGlobalCounter;
 ```
-In the placeholder library included in this project, the `Vector2` class in the public include directory is marked for export, making it accessible to consumers. In contrast, the custom `sqrt` function in the math utilities header is not exported and remains private to the library.
-
 Make sure all classes, functions, and global variables in your public headers are properly annotated. Any symbol included in a public header must be exported to be accessible outside the library, while symbols used only in implementation files can remain hidden and unannotated.
