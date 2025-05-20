@@ -88,3 +88,31 @@ CPPLIB_EXPORT void doSomething();
 CPPLIB_EXPORT extern int myGlobalCounter;
 ```
 Make sure all classes, functions, and global variables in your public headers are properly annotated. Any symbol included in a public header must be exported to be accessible outside the library, while symbols used only in implementation files can remain hidden and unannotated.
+
+### Semantic Versioning
+
+Semantic versioning ([semver](https://semver.org/) is a versioning scheme that communicates the nature of changes in a library through a three-part version number: `MAJOR.MINOR.PATCH`. This convention helps consumers of your library understand what to expect with each release and whether they can safely upgrade without breaking their code.
+
+- **MAJOR** version changes indicate breaking API changes.
+- **MINOR** version changes add functionality in a backward-compatible manner.
+- **PATCH** version changes are backward-compatible bug fixes.
+
+Following semver is especially important for shared libraries, where ABI stability matters. A consumer building against version 1.2.0 should be able to upgrade to 1.2.5 without recompiling, but upgrading to 2.0.0 may require code changes or rebuilding due to possible breaking changes.
+
+On platforms like Linux, versioning also affects how the dynamic linker resolves shared library dependencies. For example, versioned `.so` files (`libcpplib.so.1`) allow different versions to coexist or be symbolically linked for ABI compatibility.
+
+This project sets the version in the root CMakeLists.txt using:
+
+```cpp
+project(cpplib VERSION 0.0.1)
+```
+
+CMake automatically defines version variables like `yourlib_VERSION`, `yourlib_VERSION_MAJOR`, and so on, based on the `project()` declaration. You can use these in your headers or embed them in metadata as needed. This project also sets the `VERSION` and `SOVERSION` properties on the library target (in `src/CMakeLists.txt`) to control how versioned `.so` or `.dylib` files are named:
+
+```cpp
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    VERSION ${cpplib_VERSION_MAJOR}.${cpplib_VERSION_MINOR}.${cpplib_VERSION_PATCH}
+    SOVERSION ${cpplib_VERSION_MAJOR}
+)
+```
+> Just like with the export macro, these variable names are tied to the project name. When you rename the project, you'll need to update the variable names accordingly (see the _Getting Started_ section).
