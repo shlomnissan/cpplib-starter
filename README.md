@@ -10,11 +10,25 @@ It incorporates best practices in project structure, build systems, package mana
 
 If you're starting a new C++ library project, this template is designed to help you move quickly and confidently.
 
+## Contents
+- [Key Features](#key-features)
+- Getting Started
+- Project Structure
+- [CMake Configuration](#cmake-configuration)
+   - Options
+   - [Dependency Management and Presets](#dependency-management-and-presets)
+   - [Symbol Visibility](#symbol-visibility)
+   - [Semantic Versioning](#semantic-versioning)
+   - Installation
+- Unit Testing
+- Documentation
+- Scripts
+
 ## Key Features
 
 - **Clean project structure** following the [Pitchfork Layout](https://github.com/vector-of-bool/pitchfork?tab=readme-ov-file) (PFL).
 - **Modern CMake** configuration:
-  - Cross-platform builds (Windows, macOS, Linux).
+  - **Cross-platform** builds (Windows, macOS, Linux).
   - Hidden symbols by default to enforce a clear public API.
   - Semantic versioning integrated into the build system.
   - Fully installable and importable as a CMake package.
@@ -22,6 +36,7 @@ If you're starting a new C++ library project, this template is designed to help 
 - **Package management** using [vcpkg](https://vcpkg.io/en/).
 - **Continuous Integration** with GitHub Actions:
   - Automated builds and tests on Windows, macOS, and Linux.
+  - Automated documentation generation and deployment to [GitHub Pages](https://pages.github.com/).
 - **Unit testing** setup with [GoogleTest](https://github.com/google/googletest).
 - **Documentation generation** ready with [Doxygen](https://www.doxygen.nl/).
 
