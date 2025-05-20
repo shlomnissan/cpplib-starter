@@ -87,3 +87,35 @@ cmake --build --preset=release
 > Ensure the VCPKG_ROOT environment variable is set so that the presets can locate the vcpkg toolchain file correctly.
 
 Presets help enforce consistency across CI, local development, and packaging. You can easily extend them with additional presets for custom builds, testing, or platform-specific options.
+
+### Symbol Visibility
+
+Symbol visibility determines which functions, classes, or variables in a compiled library are accessible to other programs. On Windows, symbols are hidden by default and must be explicitly marked for export when building a DLL. On Unix-like systems, symbols are visible by default unless compiler flags (like `-fvisibility=hidden`) are used to hide them.
+
+Controlling symbol visibility is important for building clean and efficient shared libraries. It helps prevent naming conflicts, reduces binary size, improves load times, and hides internal implementation details. This results in a safer, more maintainable library with better runtime performance.
+
+To ensure consistent symbol visibility across platforms, this project uses CMake’s `GenerateExportHeader` module. It generates a header file (e.g., `cpplib_export.h`) that defines an export macro (e.g., `CPPLIB_EXPORT`) used to mark public symbols. By default, all symbols are hidden unless explicitly annotated with this macro.
+
+The header file and macro name are automatically derived from the project name defined in the root `CMakeLists.txt`. For example, `project(cpplib)` produces `cpplib_export.h` with the macro `CPPLIB_EXPORT`. Renaming the project will regenerate these accordingly, unless you override them manually.
+
+To expose a symbol as part of the library’s public API, mark it with the generated export macro. Here's how to annotate different kinds of symbols:
+
+```cpp
+// public_api.h
+#include "cpplib_export.h"
+
+// Exported class
+class CPPLIB_EXPORT MyClass {
+public:
+    void doWork();
+};
+
+// Exported function
+CPPLIB_EXPORT void doSomething();
+
+// Exported global variable
+CPPLIB_EXPORT extern int myGlobalCounter;
+```
+In the placeholder library included in this project, the `Vector2` class in the public include directory is marked for export, making it accessible to consumers. In contrast, the custom `sqrt` function in the math utilities header is not exported and remains private to the library.
+
+Make sure all classes, functions, and global variables in your public headers are properly annotated. Any symbol included in a public header must be exported to be accessible outside the library, while symbols used only in implementation files can remain hidden and unannotated.
