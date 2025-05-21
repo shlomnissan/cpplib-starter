@@ -15,7 +15,7 @@ If you're starting a new C++ library project, this template is designed to help 
 - Getting Started
 - Project Structure
 - [CMake Configuration](#cmake-configuration)
-   - Options
+   - [CMake Options](#cmake-options)
    - [Dependency Management and Presets](#dependency-management-and-presets)
    - [Symbol Visibility](#symbol-visibility)
    - [Semantic Versioning](#semantic-versioning)
@@ -42,6 +42,27 @@ If you're starting a new C++ library project, this template is designed to help 
 
 ## CMake Configuration
 While this starter project supports multiple distribution formats, shared libraries are preferred for their controlled symbol visibility, dynamic versioning support, reduced binary size, and lower runtime memory usage. The following subsections assume distribution via a shared library.
+
+### CMake Options
+
+This project defines several configurable CMake options to tailor the build process. While you can set these manually via `-D` flags, it’s recommended to use the provided CMake presets to ensure consistency across environments.
+
+| Option              | Type           | Default | Description                                                                 |
+|---------------------|----------------|---------|-----------------------------------------------------------------------------|
+| `BUILD_TESTS`       | Custom         | `ON`    | Enables unit test targets. When disabled, test code and dependencies are excluded. |
+| `BUILD_DOCS`        | Custom         | `ON`    | Enables building documentation. When disabled, doc generation target is skipped. |
+| `BUILD_SHARED_LIBS` | Standard       | `OFF`   | Determines whether the library is built as a shared or static library.|
+
+
+The default values above apply when configuring the project manually. However, the provided CMake presets are the recommended way to configure builds:
+- The `debug` preset enables both tests and documentation.
+- The `release` preset disables tests and documentation but enables `BUILD_SHARED_LIBS`.
+
+To configure the project manually without presets, you can set options like this:
+```bash
+cmake -DBUILD_TESTS=OFF -DBUILD_DOCS=OFF -DBUILD_SHARED_LIBS=ON -B build
+```
+Still, using presets is the preferred method to enforce consistent builds across local development and CI.
 
 ### Dependency Management and Presets
 This project uses [vcpkg](https://vcpkg.io/en/) for dependency management (see the _Getting Started_ section for installation instructions) and relies on CMake presets to simplify configuration across platforms and build types.
