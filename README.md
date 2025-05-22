@@ -19,7 +19,7 @@ If you're starting a new C++ library project, this template is designed to help 
    - [Dependency Management and Presets](#dependency-management-and-presets)
    - [Symbol Visibility](#symbol-visibility)
    - [Semantic Versioning](#semantic-versioning)
-   - Installation
+   - [Installation](#installation)
 - Unit Testing
 - Documentation
 - Scripts
@@ -152,3 +152,61 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 )
 ```
 > Just like with the export macro, these variable names are tied to the project name. When you rename the project, you'll need to update the variable names accordingly (see the _Getting Started_ section).
+
+### Installation
+
+This project includes platform-specific installation scripts to streamline the entire build and install process. These scripts configure the project using the appropriate CMake preset, build it in `release/`, and install the resulting library and headers to your system.
+
+From the root of the project, run:
+- On Unix/macOS:
+```bash
+./scripts/install.sh
+```
+- On Windows (in `cmd.exe`):
+```c
+scripts\install.bat
+```
+
+These scripts:
+- Clean any previous `release/` builds
+- Configure the project using the `release` preset
+- Build the release version of the library
+- Install it system-wide
+
+> On Unix-like systems, installation may require `sudo`. To change the install prefix, modify the script or preset to set `CMAKE_INSTALL_PREFIX`.
+
+To install manually, you can replicate the script steps:
+
+```bash
+cmake --preset=release
+cmake --build --preset=release
+sudo cmake --install release
+```
+
+#### Consuming the Installed Library
+
+Once installed, the library can be used in any CMake-based project via `find_package()`:
+
+```cmake
+find_package(mylib REQUIRED)
+
+add_executable(my_app main.cpp)
+target_link_libraries(my_app PRIVATE cpplib::cpplib)
+```
+
+This template installs a namespaced target in the form `cpplib::cpplib`, where `cpplib` is the project name defined in your root `CMakeLists.txt` (e.g., `project(cpplib VERSION 0.0.1)`). When you rename the project, the exported target, version files, and export macro will all reflect the new name (e.g., `mylib::mylib`).
+
+The imported target includes:
+- Correct include paths and compile definitions
+- Linker settings for static or shared builds
+- Version metadata for compatibility validation
+
+> This CMake package is fully relocatable and supports consumption from both system-wide installs and local `CMAKE_PREFIX_PATH` overrides.
+
+If you prefer not to use CMake in your consumer project, you can link the installed library manually using your system compiler. For example, if the library was installed to `/usr/local` and named `libmylib`.so or `libmylib.a`, you can compile like this:
+
+```bash
+clang++ -std=c++23 main.cpp -I/usr/local/include -L/usr/local/lib -lmylib
+```
+
+Make sure to adjust the include and library paths based on your installation prefix.
