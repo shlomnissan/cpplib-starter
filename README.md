@@ -22,7 +22,6 @@ If you're starting a new C++ library project, this template is designed to help 
    - [Installation](#installation)
 - Unit Testing
 - Documentation
-- Scripts
 
 ## Key Features
 
@@ -168,10 +167,10 @@ scripts\install.bat
 ```
 
 These scripts:
-- Clean any previous `release/` builds
-- Configure the project using the `release` preset
-- Build the release version of the library
-- Install it system-wide
+- Clean any previous `release/` builds.
+- Configure the project using the `release` preset.
+- Build the release version of the library.
+- Install it system-wide.
 
 > On Unix-like systems, installation may require `sudo`. To change the install prefix, modify the script or preset to set `CMAKE_INSTALL_PREFIX`.
 
@@ -197,9 +196,9 @@ target_link_libraries(my_app PRIVATE cpplib::cpplib)
 This template installs a namespaced target in the form `cpplib::cpplib`, where `cpplib` is the project name defined in your root `CMakeLists.txt` (e.g., `project(cpplib VERSION 0.0.1)`). When you rename the project, the exported target, version files, and export macro will all reflect the new name (e.g., `mylib::mylib`).
 
 The imported target includes:
-- Correct include paths and compile definitions
-- Linker settings for static or shared builds
-- Version metadata for compatibility validation
+- Correct include paths and compile definitions.
+- Linker settings for static or shared builds.
+- Version metadata for compatibility validation.
 
 > This CMake package is fully relocatable and supports consumption from both system-wide installs and local `CMAKE_PREFIX_PATH` overrides.
 
@@ -210,3 +209,5 @@ clang++ -std=c++23 main.cpp -I/usr/local/include -L/usr/local/lib -lmylib
 ```
 
 Make sure to adjust the include and library paths based on your installation prefix.
+
+## Unit Testing
